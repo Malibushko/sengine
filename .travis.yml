@@ -1,102 +1,141 @@
-dist:     trusty
-sudo:     false
+language: cpp
 
-language: cpp       
-    
-matrix:
+install:
+  - pip install --user cmake
+
+branches:
+  except:
+    - /^v[0-9]/
+
+jobs:
   include:
-    # works on Precise and Trusty
-    - os: linux
-      dist: trusty
+
+    - name: x86, linux, gcc-9
+      os: linux
+      dist: bionic
+      env:
+        - GCC_VER="9"
+        - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
+        - CMAKE_ARCH="-DCMAKE_CXX_FLAGS=-m32"
+
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
+            - linux-libc-dev:i386
+            - g++-9-multilib
+
+    - name: x86, linux, gcc-10
+      os: linux
+      dist: focal
       env:
-        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+        - GCC_VER="10"
+        - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
+        - CMAKE_ARCH="-DCMAKE_CXX_FLAGS=-m32"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - linux-libc-dev:i386
+            - g++-10-multilib
 
-    - os: linux
-      dist: xenial
-
-    - os: linux
+    - name: x86, linux, clang-9
+      os: linux
       dist: bionic
+      env:
+        - CLANG_VER="9"
+        - MATRIX_EVAL="CC=clang-${CLANG_VER} && CXX=clang++-${CLANG_VER}"
+        - CMAKE_ARCH="-DCMAKE_CXX_FLAGS=-m32"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - linux-libc-dev:i386
+            - g++-9-multilib
+            - clang-9
 
-    #- os: linux
-    #  compiler: clang
-    #  env: 
-    #    - MATRIX_EVAL="CC=clang-3.7 && CXX=clang++-3.7"
-    #  addons:
-    #    apt:
-    #      sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7']
-    #      packages: ['g++-6', 'clang-3.7']
-  
-    - os: linux
-      compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+    - name: x86, linux, clang-10
+      os: linux
+      dist: bionic
+      env:
+        - CLANG_VER="10"
+        - MATRIX_EVAL="CC=clang-${CLANG_VER} && CXX=clang++-${CLANG_VER}"
+        - CMAKE_ARCH="-DCMAKE_CXX_FLAGS=-m32"
       addons:
         apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-6', 'clang-3.8']
-  
-    - os: linux
-      compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-6', 'clang-3.9']
-  
-    - os: linux
-      compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-4.0']
-          packages: ['g++-6', 'clang-4.0']
-  
-    - os: linux
-      compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-5.0']
-          packages: ['g++-6', 'clang-5.0']
-  
-    #- os: linux
-    #  compiler: clang
-    #  env: 
-    #    - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
-    #  addons:
-    #    apt:
-    #      sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-6.0']
-    #      packages: ['g++-6', 'clang-6.0']
-  
-    - os: linux
-      compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-7']
-          packages: ['g++-6', 'clang-7']
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - linux-libc-dev:i386
+            - g++-10-multilib # for libstdc++
+            - clang-10
 
-before_install:
+    - name: x86-64, linux, gcc-9
+      os: linux
+      dist: bionic
+      env:
+        - GCC_VER="9"
+        - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
+        - CMAKE_ARCH=""
+
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9-multilib
+
+    - name: x86-64, linux, gcc-10
+      os: linux
+      dist: focal
+      env:
+        - GCC_VER="10"
+        - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
+        - CMAKE_ARCH=""
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-10-multilib
+
+    - name: x86-64, linux, clang-9
+      os: linux
+      dist: bionic
+      env:
+        - CLANG_VER="9"
+        - MATRIX_EVAL="CC=clang-${CLANG_VER} && CXX=clang++-${CLANG_VER}"
+        - CMAKE_ARCH=""
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9-multilib
+            - clang-9
+
+    - name: x86-64, linux, clang-10
+      os: linux
+      dist: bionic
+      env:
+        - CLANG_VER="10"
+        - MATRIX_EVAL="CC=clang-${CLANG_VER} && CXX=clang++-${CLANG_VER}"
+        - CMAKE_ARCH=""
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-10-multilib # for libstdc++
+            - clang-10
+
+before_script:
   - eval "${MATRIX_EVAL}"
-    
-install:
-  - pyenv global 3.6 || true # for trusty
-  - pyenv global 3.7 || true # for xenial
-  - pyenv global 3.7.1 || true # for bionic
-  - pip install --user conan
-  - conan profile new default --detect
-  - conan profile update settings.compiler.libcxx=libstdc++11 default
-  
+
+
 script:
   - mkdir build
   - cd build
