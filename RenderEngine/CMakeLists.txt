@@ -1,7 +1,7 @@
 project (RenderEngine LANGUAGES C CXX)
 
 set(TARGET_NAME RenderEngine)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS  ON)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 include(${CMAKE_SOURCE_DIR}/Utility.cmake)
 
@@ -21,5 +21,5 @@ set(SHADERS)
 add_library(${TARGET_NAME} SHARED ${HEADERS} ${SOURCES} ${SHADERS})
 
 target_include_directories(${TARGET_NAME} PUBLIC ${CONAN_INCLUDE_DIRS})
-target_link_libraries(${TARGET_NAME} PUBLIC ${CONAN_LIBS})
-target_link_directories(${TARGET_NAME} PUBLIC ${CONAN_LIB_DIRS})
+target_link_libraries     (${TARGET_NAME} PUBLIC ${CONAN_LIBS})
+target_link_directories   (${TARGET_NAME} PUBLIC ${CONAN_LIB_DIRS})
