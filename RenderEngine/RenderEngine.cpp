@@ -2,5 +2,8 @@
 
 RenderEngine::RenderEngine()
 {
+}
 
+void RenderEngine::ProcessEvents()
+{
 }

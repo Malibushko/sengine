@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 project(SEngine)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
@@ -17,4 +18,5 @@ add_subdirectory(RenderEngine)
 
 add_executable(SEngine main.cpp)
 
-target_link_libraries(SEngine RenderEngine)
+find_package(Threads REQUIRED)
+target_link_libraries(SEngine Core Threads::Threads)

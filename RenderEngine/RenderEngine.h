@@ -5,4 +5,6 @@ class RenderEngine
 {
  public:
     RenderEngine();
+
+    void ProcessEvents();
 };

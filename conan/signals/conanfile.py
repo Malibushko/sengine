@@ -17,6 +17,3 @@ class SignalsConan(ConanFile):
 
     def package(self):
         self.copy("signals.hpp", dst="include", src="signals")
-
-    def package_info(self):
-        self.cpp_info.libs = ["signals"]

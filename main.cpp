@@ -1,7 +1,12 @@
 #include <iostream>
-#include "RenderEngine/RenderEngine.h"
+#include "RenderEngine/Game.h"
 
 int main()
 {
+    auto& Game = Game::GetInstance();
+    Game.Init();
+
+    Game.Start();
+
     return 0;
 }
