@@ -16,3 +16,5 @@ set(ENGINE_CONAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conan)
 add_subdirectory(RenderEngine)
 
 add_executable(SEngine main.cpp)
+
+target_link_libraries(SEngine RenderEngine)

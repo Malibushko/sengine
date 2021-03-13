@@ -1,6 +1,7 @@
 #include <iostream>
 #include "RenderEngine/RenderEngine.h"
 
-int main() {
+int main()
+{
     return 0;
 }

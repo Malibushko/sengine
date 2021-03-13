@@ -1,10 +1,10 @@
-#pragma  once
+#pragma once
 #include <string_view>
 #include <glm/glm.hpp>
 
 class Shader
 {
-public:
+ public:
     Shader( std::string_view vertex, std::string_view fragment );
     ~Shader();
 
@@ -19,7 +19,8 @@ public:
     void Set( std::string_view name, const glm::mat4& mat ) const;
     void Set( std::string_view name, const glm::vec3& vec ) const;
     void Set( std::string_view name, float x, float y, float z ) const;
-private:
+
+ private:
     using vertex_t = unsigned int;
     unsigned int m_ID = -1;
 

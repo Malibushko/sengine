@@ -3,32 +3,33 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace {
-    std::string readfile( const char* name )
-    {
-        std::ifstream stream( name );
-        if( !stream.is_open() ) {
-            std::cerr << "Cannot open file " << name << "\n";
-            return {};
-        }
-        std::string buff;
-        buff.resize( std::filesystem::file_size( name ) );
-        stream.read( buff.data(), buff.size() );
-        return buff;
+std::string readfile( const char* name )
+{
+    std::ifstream stream( name );
+    if( !stream.is_open() ) {
+        std::cerr << "Cannot open file " << name << "\n";
+        return {};
     }
-    void check_error( int descr, int error = GL_COMPILE_STATUS )
-    {
-        int  success;
-        char infoLog[512];
-        glGetShaderiv( descr, error, &success );
-        if( !success ) {
-            glGetShaderInfoLog( descr, 512, NULL, infoLog );
-            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                      << infoLog << std::endl;
-        }
+    std::string buff;
+    buff.resize( std::filesystem::file_size( name ) );
+    stream.read( buff.data(), buff.size() );
+    return buff;
+}
+void check_error( int descr, int error = GL_COMPILE_STATUS )
+{
+    int  success;
+    char infoLog[512];
+    glGetShaderiv( descr, error, &success );
+    if( !success ) {
+        glGetShaderInfoLog( descr, 512, NULL, infoLog );
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+                  << infoLog << std::endl;
     }
+}
 } // namespace
 
 Shader::Shader( std::string_view vertex, std::string_view fragment )
@@ -95,15 +96,15 @@ void Shader::Set( std::string_view name, double value ) const
 void Shader::Set( std::string_view name, const glm::mat4& mat ) const
 {
     glUniformMatrix4fv(
-            glGetUniformLocation( m_ID, name.data() ), 1, GL_FALSE, glm::value_ptr( mat ) );
+       glGetUniformLocation( m_ID, name.data() ), 1, GL_FALSE, glm::value_ptr( mat ) );
 }
 
-void Shader::Set(std::string_view name, const glm::vec3 &vec) const
+void Shader::Set( std::string_view name, const glm::vec3& vec ) const
 {
-    Set(name, vec.x, vec.y, vec.z);
+    Set( name, vec.x, vec.y, vec.z );
 }
 
-void Shader::Set(std::string_view name, float x, float y, float z) const
+void Shader::Set( std::string_view name, float x, float y, float z ) const
 {
     glUniform3f( glGetUniformLocation( m_ID, name.data() ), x, y, z );
 }

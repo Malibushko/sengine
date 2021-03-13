@@ -3,7 +3,6 @@
 
 class RenderEngine
 {
-public:
+ public:
     RenderEngine();
 };
-
