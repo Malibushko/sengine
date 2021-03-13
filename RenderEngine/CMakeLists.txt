@@ -1,15 +1,15 @@
 project (RenderEngine LANGUAGES C CXX)
-
 set(TARGET_NAME RenderEngine)
+
+include(${CMAKE_SOURCE_DIR}/Utility.cmake)
+
 
 list(APPEND CONAN_INSTALL_LIBS signals)
 
-foreach(Lib IN LISTS ${CONAN_INSTALL_LIBS})
-    message("Appending '${Lib}' to the path of libs")
-    conan_cmake_install(PATH_OR_REFERENCE ${ENGINE_CONAN_DIR}/${Lib}/conanfile.py)
-endforeach()
+INSTALL_CONAN_LIBS(${CONAN_INSTALL_LIBS})
+conan_cmake_run(CONANFILE ${CMAKE_CURRENT_SOURCE_DIR}/conanfile.txt
+                 BUILD missing BASIC_SETUP CMAKE_TARGETS)
 
-conan_cmake_run(CONANFILE conanfile.txt BUILD MISSING BASIC_SETUP)
 set(SHADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}}/Shaders)
 
 set(HEADERS RenderEngine.h
@@ -19,4 +19,5 @@ set(SOURCES RenderEngine.cpp
 set(SHADERS)
 
 add_library(${TARGET_NAME} SHARED ${HEADERS} ${SOURCES} ${SHADERS})
-target_link_libraries(${TARGET_NAME} ${CONAN_LIBS})
+
+target_link_libraries(${TARGET_NAME} PRIVATE ${CONAN_LIBS})

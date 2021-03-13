@@ -1,4 +1,4 @@
-from conans import ConanFile, CMake, tools
+from conans import ConanFile
 
 
 class SignalsConan(ConanFile):
@@ -15,13 +15,8 @@ class SignalsConan(ConanFile):
     def source(self):
         self.run("git clone https://github.com/TheWisp/signals.git")
 
-    def build(self):
-        cmake = CMake(self)
-        cmake.configure(source_folder="signals")
-
     def package(self):
         self.copy("signals.hpp", dst="include", src="signals")
 
     def package_info(self):
         self.cpp_info.libs = ["signals"]
-

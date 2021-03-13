@@ -11,7 +11,7 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-set(ENGINE_CONAN_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/conan)
+set(ENGINE_CONAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conan)
 
 add_subdirectory(RenderEngine)
 
