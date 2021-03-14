@@ -21,6 +21,8 @@ public:
     Window* GetActiveWindow() const;
     void    SetActiveWindow(Window* _Window);
 
+    RenderEngine* GetRenderEngine() const;
+
 public:
     void Start();
     void Shutdown();
@@ -33,7 +35,8 @@ protected:
     Game& operator=(Game&&) = delete;
 
 private:
-    std::atomic<bool>       m_Stop = false;
-    std::thread             m_WorkerThread;
-    std::unique_ptr<Window> m_Window;
+    std::atomic<bool>             m_Stop = false;
+    std::thread                   m_WorkerThread;
+    std::unique_ptr<Window>       m_Window;
+    std::unique_ptr<RenderEngine> m_RenderEngine;
 };

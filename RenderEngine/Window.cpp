@@ -6,11 +6,18 @@
 #include <GLFW/glfw3.h>
 #include <cassert>
 
+#include <atomic>
+#include <mutex>
+
 Window::Window(int _Width, int _Height, std::string_view _Title)
 {
+    static std::once_flag IsModuleInit;
+    std::call_once(IsModuleInit, []() { Window::Init(); });
+
     m_WndHandler = glfwCreateWindow(_Width, _Height, _Title.data(), 0, 0);
     if(m_WndHandler)
     {
+        glfwMakeContextCurrent(m_WndHandler);
         glfwSetFramebufferSizeCallback(
             m_WndHandler, [](GLFWwindow* _Window, int _Width, int _Height) {
                 glViewport(0, 0, _Width, _Height);
@@ -25,6 +32,7 @@ Window::Window(int _Width, int _Height, std::string_view _Title)
                     ActiveWindow->OnSizeChanged(_Width, _Height);
                 }
             });
+        gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress));
     }
 }
 Window::~Window()
@@ -43,6 +51,13 @@ bool Window::IsShouldClose() const
     return glfwWindowShouldClose(m_WndHandler);
 }
 
+void Window::Clear(Color _Color)
+{
+    Color Normalized = _Color.Normalize();
+    glClearColor(Normalized.r, Normalized.g, Normalized.b, Normalized.a);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Window::Show(bool _IsVisible)
 {
     assert(m_WndHandler != nullptr);
@@ -55,6 +70,11 @@ void Window::Show(bool _IsVisible)
     OnVisibilityChanged(_IsVisible);
 }
 
+void Window::Close() const
+{
+    glfwSetWindowShouldClose(m_WndHandler, GLFW_TRUE);
+}
+
 void Window::ProcessEvents() const
 {
     assert(m_WndHandler != nullptr);
@@ -63,21 +83,18 @@ void Window::ProcessEvents() const
     glfwPollEvents();
 }
 
-void Window::BecomeActive() const
+std::pair<size_t, size_t> Window::GetSize() const
 {
-    assert(m_WndHandler != nullptr);
-    glfwMakeContextCurrent(m_WndHandler);
-    OnBecomeActive();
+    return {m_Width, m_Height};
 }
 
 bool Window::Init()
 {
-    glfwInit();
+    bool Result = glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    return gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+    return Result == GLFW_TRUE;
 }
 
 Window::handler_t Window::GetRawHandler() const

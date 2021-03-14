@@ -1,0 +1,101 @@
+{
+ "graph_lock": {
+  "nodes": {
+   "0": {
+    "options": "glad:extensions=''\nglad:fPIC=True\nglad:gl_profile=compatibility\nglad:gl_version=3.3\nglad:gles1_version=None\nglad:gles2_version=None\nglad:glsc2_version=None\nglad:no_loader=False\nglad:shared=False\nglad:spec=gl\nglfw:fPIC=True\nglfw:shared=False\nglfw:vulkan_static=False\ntbb:fPIC=True\ntbb:shared=True\ntbb:tbbmalloc=False\ntbb:tbbproxy=False",
+    "requires": [
+     "1",
+     "2",
+     "4",
+     "5",
+     "6",
+     "9",
+     "10"
+    ],
+    "path": "../../RenderEngine/conanfile.txt",
+    "context": "host"
+   },
+   "1": {
+    "ref": "opengl/system",
+    "options": "",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "0",
+    "context": "host"
+   },
+   "2": {
+    "ref": "glfw/3.3.3",
+    "options": "fPIC=True\nshared=False\nvulkan_static=False",
+    "package_id": "8ec45cc70b70d9ad150174b47d9f9cc909baaa11",
+    "prev": "0",
+    "requires": [
+     "1",
+     "3"
+    ],
+    "context": "host"
+   },
+   "3": {
+    "ref": "xorg/system",
+    "options": "",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "0",
+    "context": "host"
+   },
+   "4": {
+    "ref": "glad/0.1.34",
+    "options": "extensions=''\nfPIC=True\ngl_profile=compatibility\ngl_version=3.3\ngles1_version=None\ngles2_version=None\nglsc2_version=None\nno_loader=False\nshared=False\nspec=gl",
+    "package_id": "bd85bf0c7d407ef71570ebc6e16dcd8d62575bcc",
+    "prev": "0",
+    "context": "host"
+   },
+   "5": {
+    "ref": "glm/0.9.9.5",
+    "options": "",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "0",
+    "context": "host"
+   },
+   "6": {
+    "ref": "stduuid/1.0",
+    "options": "libuuid:fPIC=True\nlibuuid:shared=False\nms-gsl:on_contract_violation=terminate",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "0",
+    "requires": [
+     "7",
+     "8"
+    ],
+    "context": "host"
+   },
+   "7": {
+    "ref": "ms-gsl/2.0.0",
+    "options": "on_contract_violation=terminate",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "0",
+    "context": "host"
+   },
+   "8": {
+    "ref": "libuuid/1.0.3",
+    "options": "fPIC=True\nshared=False",
+    "package_id": "19729b9559f3ae196cad45cb2b97468ccb75dcd1",
+    "prev": "0",
+    "context": "host"
+   },
+   "9": {
+    "ref": "tbb/2020.3",
+    "options": "fPIC=True\nshared=True\ntbbmalloc=False\ntbbproxy=False",
+    "package_id": "b91d4c850085ce839f1cd3308ec904a1a58da7ea",
+    "prev": "0",
+    "context": "host"
+   },
+   "10": {
+    "ref": "signals/1.0",
+    "options": "",
+    "package_id": "73468d6cd433312abe58cd86e0da983f5d6f13ce",
+    "prev": "0",
+    "context": "host"
+   }
+  },
+  "revisions_enabled": false
+ },
+ "version": "0.4",
+ "profile_host": "[settings]\narch=x86_64\narch_build=x86_64\nbuild_type=Release\ncompiler=gcc\ncompiler.libcxx=libstdc++11\ncompiler.version=10\nos=Linux\nos_build=Linux\n[options]\n[build_requires]\n[env]\n"
+}

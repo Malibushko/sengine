@@ -1,6 +1,1 @@
-#include "color.h"
-
-Color::Color()
-{
-
-}
+#include "Color.h"

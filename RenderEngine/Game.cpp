@@ -3,6 +3,7 @@
 #include "RenderEngine.h"
 #include "Utility/Common.h"
 #include "Window.h"
+#include <iostream>
 
 Game& Game::GetInstance()
 {
@@ -12,8 +13,7 @@ Game& Game::GetInstance()
 
 bool Game::Init()
 {
-    Window::Init();
-
+    m_RenderEngine = std::make_unique<RenderEngine>();
     return true;
 }
 
@@ -32,14 +32,16 @@ void Game::Start()
         float LastTick = 0;
         float DeltaTime = 0;
 
-        while(!m_Stop || m_Window->IsShouldClose())
+        while(!m_Stop && !m_Window->IsShouldClose())
         {
+            m_RenderEngine->ProcessEvents();
+
+            m_Window->Clear({123, 123, 123, 255});
             m_Window->ProcessEvents();
 
             float CurrentTime = Common::GetTime();
             DeltaTime = CurrentTime - LastTick;
             LastTick = CurrentTime;
-
             OnGameTick(DeltaTime);
         }
     });
@@ -49,6 +51,9 @@ void Game::Shutdown()
 {
     if(m_WorkerThread.joinable())
         m_WorkerThread.join();
+
+    if(m_Window)
+        m_Window->Close();
 }
 
 Window* Game::GetActiveWindow() const
@@ -59,6 +64,9 @@ Window* Game::GetActiveWindow() const
 void Game::SetActiveWindow(Window* _Window)
 {
     m_Window.reset(_Window);
-    if(m_Window)
-        m_Window->BecomeActive();
+}
+
+RenderEngine* Game::GetRenderEngine() const
+{
+    return m_RenderEngine.get();
 }

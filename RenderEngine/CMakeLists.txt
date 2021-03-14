@@ -23,6 +23,7 @@ set(HEADERS RenderEngine.h
             Utility/Singletone.h
             Utility/Shader.h
             Utility/Common.h
+            Utility/Rect.h
             )
 set(SOURCES RenderEngine.cpp
             Window.cpp
@@ -33,6 +34,7 @@ set(SOURCES RenderEngine.cpp
             Utility/Color.cpp
             Utility/Shader.cpp
             Utility/Common.cpp
+            Traits/Initable.h
             )
 set(SHADERS)
 
