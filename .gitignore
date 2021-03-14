@@ -3,7 +3,7 @@
 
 cmake-build-*/
 conan.cmake
-.idea
+.idea/
 # Compiled Object files
 *.slo
 *.lo
