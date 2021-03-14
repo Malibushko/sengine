@@ -16,15 +16,23 @@ set(SHADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}}/Shaders)
 set(HEADERS RenderEngine.h
             Window.h
             Game.h
+            Painter.h
             Traits/Identifiable.h
+            Utility/Brush.h
+            Utility/Color.h
             Utility/Singletone.h
             Utility/Shader.h
+            Utility/Common.h
             )
 set(SOURCES RenderEngine.cpp
             Window.cpp
             Game.cpp
+            Painter.cpp
             Traits/Identifiable.cpp
+            Utility/Brush.cpp
+            Utility/Color.cpp
             Utility/Shader.cpp
+            Utility/Common.cpp
             )
 set(SHADERS)
 

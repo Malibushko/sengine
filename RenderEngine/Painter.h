@@ -1,0 +1,7 @@
+
+
+class Painter
+{
+public:
+    Painter();
+};

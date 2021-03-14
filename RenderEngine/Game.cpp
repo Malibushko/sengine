@@ -1,10 +1,8 @@
 #include "Game.h"
-#include <GLFW/glfw3.h>
 
-#include "Window.h"
 #include "RenderEngine.h"
-
-#include <iostream>
+#include "Utility/Common.h"
+#include "Window.h"
 
 Game& Game::GetInstance()
 {
@@ -16,13 +14,12 @@ bool Game::Init()
 {
     Window::Init();
 
-    m_Window = std::make_unique< Window >( 800, 600, "Hi Engine!" );
-
     return true;
 }
 
 Game::Game()
 {
+    m_Window = nullptr;
 }
 Game::~Game()
 {
@@ -31,32 +28,37 @@ Game::~Game()
 
 void Game::Start()
 {
-    std::cout << "Start" << std::endl;
-    m_WorkerThread = std::thread( [&]() {
-        std::cout << "End" << std::endl;
+    m_WorkerThread = std::thread([&]() {
         float LastTick = 0;
         float DeltaTime = 0;
 
-        m_Window->BecomeActive();
-        while( !m_Stop ) {
+        while(!m_Stop || m_Window->IsShouldClose())
+        {
             m_Window->ProcessEvents();
 
-            float CurrentTime = glfwGetTime();
+            float CurrentTime = Common::GetTime();
             DeltaTime = CurrentTime - LastTick;
             LastTick = CurrentTime;
 
-            OnGameTick( DeltaTime );
+            OnGameTick(DeltaTime);
         }
-    } );
+    });
 }
 
 void Game::Shutdown()
 {
-    if( m_WorkerThread.joinable() )
+    if(m_WorkerThread.joinable())
         m_WorkerThread.join();
 }
 
 Window* Game::GetActiveWindow() const
 {
     return m_Window.get();
+}
+
+void Game::SetActiveWindow(Window* _Window)
+{
+    m_Window.reset(_Window);
+    if(m_Window)
+        m_Window->BecomeActive();
 }

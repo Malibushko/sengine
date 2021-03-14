@@ -1,41 +1,39 @@
 #pragma once
+#include <atomic>
 #include <memory>
-
 #include <signals.hpp>
 #include <thread>
-#include <atomic>
-#include "Utility/Singletone.h"
 
 class Window;
 class RenderEngine;
 
 class Game
 {
- public:
-    fteng::signal< void() >        OnShutdown;
-    fteng::signal< void() >        OnStart;
-    fteng::signal< void( float ) > OnGameTick;
+public:
+    fteng::signal<void()>      OnShutdown;
+    fteng::signal<void()>      OnStart;
+    fteng::signal<void(float)> OnGameTick;
 
- public:
+public:
     static Game& GetInstance();
 
     bool    Init();
     Window* GetActiveWindow() const;
+    void    SetActiveWindow(Window* _Window);
 
- protected:
-    Game();
-    ~Game();
-
-    Game& operator=( const Game& ) = delete;
-    Game& operator=( Game&& ) = delete;
-
- public:
+public:
     void Start();
     void Shutdown();
 
- private:
-    std::atomic< bool >             m_Stop = false;
-    std::thread                     m_WorkerThread;
-    std::unique_ptr< Window >       m_Window = nullptr;
-    std::unique_ptr< RenderEngine > m_RenderEngine = nullptr;
+protected:
+    Game();
+    ~Game();
+
+    Game& operator=(const Game&) = delete;
+    Game& operator=(Game&&) = delete;
+
+private:
+    std::atomic<bool>       m_Stop = false;
+    std::thread             m_WorkerThread;
+    std::unique_ptr<Window> m_Window;
 };

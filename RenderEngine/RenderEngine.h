@@ -1,9 +1,8 @@
 #pragma once
-#include "Utility/Shader.h"
 
 class RenderEngine
 {
- public:
+public:
     RenderEngine();
 
     void ProcessEvents();
